@@ -8,7 +8,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import java.util.Scanner;  // Import the Scanner class
+import java.util.Scanner; 
 
 
 public class Main {
@@ -20,10 +20,11 @@ public class Main {
 		Session session = sessionFactory.openSession();
 		
 		do {
+			limpaConsole();
 			menu(key);
-			Scanner input = new Scanner(System.in); 
+			Scanner k = new Scanner(System.in); 
 			System.out.print("Escolha uma das opções do nosso menu:");
-			key = input.nextLine();
+			key = k.nextLine();
 			switch (key) {
 
 				case "C": //CREATE - C
@@ -32,7 +33,6 @@ public class Main {
 					session.save( new Pessoa("09829992809", "Raphael"));
 					session.save( new Pessoa("64783763565", "Alana"));
 					session.getTransaction().commit();
-					limpaConsole();
 					break;
 	
 				case "R": //READ - R
@@ -42,7 +42,6 @@ public class Main {
 					for ( Pessoa pessoa : (List<Pessoa>) result ) {
 						System.out.println( pessoa.getId() + " - " + pessoa.getCpf() + " - " + pessoa.getNome());
 					}
-					limpaConsole();
 					break;
 	
 				case "U": //UPDATE - U
@@ -54,7 +53,6 @@ public class Main {
 					query.setParameter("newnome", nome);
 					query.executeUpdate();
 					session.getTransaction().commit();	
-					limpaConsole();
 					break;
 	
 				case "D": //DELETE - D
@@ -64,7 +62,6 @@ public class Main {
 					query.setParameter("cpf","09829992809");
 					query.executeUpdate();
 					session.getTransaction().commit();
-					limpaConsole();
 					break;
 	
 				case "0":
