@@ -23,15 +23,15 @@ public class Main {
 			limpaConsole();
 			menu(key);
 			Scanner k = new Scanner(System.in); 
-			System.out.print("Escolha uma das opções do nosso menu:");
+			System.out.print("Escolha uma das opções do nosso menu: ");
 			key = k.nextLine();
 			switch (key) {
 
 				case "C": //CREATE - C
 					System.out.println("");
 					session.beginTransaction();
-					session.save( new Pessoa("09829992809", "Raphael"));
-					session.save( new Pessoa("64783763565", "Alana"));
+					session.save( new Pessoa("Raphael", "09829992809", "30/02/1997", "81998443591"));
+					session.save( new Pessoa("Alana", "64783763565", "11/10/1999", "81937946281"));
 					session.getTransaction().commit();
 					break;
 	
@@ -40,7 +40,7 @@ public class Main {
 					System.out.println("\n--- SELECT ---");
 					List result = session.createQuery( "from Pessoa" ).list();
 					for ( Pessoa pessoa : (List<Pessoa>) result ) {
-						System.out.println( pessoa.getId() + " - " + pessoa.getCpf() + " - " + pessoa.getNome());
+						System.out.println( pessoa.getId() + " - " + pessoa.getNome() + " - " + pessoa.getCpf() + " - " + pessoa.getDataNascimento() + " - " + pessoa.getContato());
 					}
 					break;
 	
@@ -52,6 +52,7 @@ public class Main {
 					query.setParameter("cpf","09829992809");
 					query.setParameter("newnome", nome);
 					query.executeUpdate();
+					// session.refresh(query);
 					session.getTransaction().commit();	
 					break;
 	

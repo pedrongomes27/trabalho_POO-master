@@ -8,20 +8,24 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-@Table( name = "pessoas" )
+@Table( name = "pessoa" )
 public class Pessoa {
 	private Long id;
-	private String cpf;
 	private String nome;
+	private String cpf;
+	private String datanascimento;
+	private String contato;
 	
 	public Pessoa() {
 		//O Hibernate necessita de um construtor sem parametros
 	}	
 	
-	public Pessoa(String cpf, String nome) {
+	public Pessoa(String nome, String cpf, String datanascimento, String contato) {
 		super();
-		this.cpf = cpf;
 		this.nome = nome;
+		this.cpf = cpf;
+		this.datanascimento = datanascimento;
+		this.contato = contato;
 	}
 
 	@Id
@@ -44,6 +48,18 @@ public class Pessoa {
 	}
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	public String getDataNascimento() {
+		return datanascimento;
+	}
+	public void setDataNascimento(String datanascimento) {
+		this.datanascimento = datanascimento;
+	}
+	public String getContato() {
+		return contato;
+	}
+	public void setContato(String contato) {
+		this.contato = contato;
 	}
 	
 	
