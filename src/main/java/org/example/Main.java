@@ -24,35 +24,61 @@ public class Main {
 			menu(key);
 			Scanner k = new Scanner(System.in); 
 			System.out.print("Escolha uma das opções do nosso menu: ");
-			key = k.nextLine();
+			key = k.nextLine().toUpperCase();
+
 			switch (key) {
 
 				case "C": //CREATE - C
-					System.out.println("");
 					session.beginTransaction();
-					session.save( new Pessoa("Raphael", "09829992809", "30/02/1997", "81998443591"));
-					session.save( new Pessoa("Alana", "64783763565", "11/10/1999", "81937946281"));
+					Scanner c = new Scanner(System.in); 
+					
+					Pessoa p1 = new Pessoa();
+					
+					System.out.print("\nNome: ");
+					String nome = c.nextLine();
+					p1.setNome(nome);
+
+					System.out.print("CPF: ");
+					String cpf = c.nextLine();
+					p1.setCpf(cpf);
+
+					System.out.print("Data de Nascimento: ");
+					String dataNasci = c.nextLine();
+					p1.setDataNascimento(dataNasci);
+
+					System.out.print("Contato: ");
+					String contato = c.nextLine();
+					p1.setContato(contato);
+
+					session.save(p1);
+					session.flush();
+
+					// session.save( new Pessoa(nome, cpf, dataNasci, contato));
 					session.getTransaction().commit();
 					break;
 	
 				case "R": //READ - R
-					//busca todos os dados na base
 					System.out.println("\n--- SELECT ---");
+					session.beginTransaction();
+					session.flush();
+
 					List result = session.createQuery( "from Pessoa" ).list();
 					for ( Pessoa pessoa : (List<Pessoa>) result ) {
 						System.out.println( pessoa.getId() + " - " + pessoa.getNome() + " - " + pessoa.getCpf() + " - " + pessoa.getDataNascimento() + " - " + pessoa.getContato());
 					}
+					session.getTransaction().commit();	
+
 					break;
 	
 				case "U": //UPDATE - U
 					System.out.println("\n--- UPDATE com WHERE ---");
 					session.beginTransaction();
 					Query query = session.createQuery( "UPDATE Pessoa p SET p.nome = :newnome WHERE p.cpf = :cpf" );
-					String nome = "Jorge";
-					query.setParameter("cpf","09829992809");
-					query.setParameter("newnome", nome);
+					String newnome = "Othon";
+					query.setParameter("cpf","78978978913");
+					query.setParameter("newnome", newnome);
 					query.executeUpdate();
-					// session.refresh(query);
+					session.flush();
 					session.getTransaction().commit();	
 					break;
 	
@@ -65,15 +91,18 @@ public class Main {
 					session.getTransaction().commit();
 					break;
 	
-				case "0":
-					System.exit(0);
-					break;
+				// case "0":
+				// 	//System.exit(0);
+				// 	break;
 				default:
 					break;
 			}
 
+			System.out.println(key);
+
+
 		}
-		while (key != "0");
+		while (!key.equals("0"));
 		session.close();
 		sessionFactory.close();
 	}
