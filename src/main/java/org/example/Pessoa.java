@@ -20,13 +20,13 @@ public class Pessoa {
 		//O Hibernate necessita de um construtor sem parametros
 	}	
 	
-	// public Pessoa(String nome, String cpf, String datanascimento, String contato) {
-	// 	super();
-	// 	this.nome = nome;
-	// 	this.cpf = cpf;
-	// 	this.datanascimento = datanascimento;
-	// 	this.contato = contato;
-	// }
+	public Pessoa(String nome, String cpf, String datanascimento, String contato) {
+		super();
+		this.nome = nome;
+		this.cpf = cpf;
+		this.datanascimento = datanascimento;
+		this.contato = contato;
+	}
 
 	@Id
 	@GeneratedValue(generator="increment")

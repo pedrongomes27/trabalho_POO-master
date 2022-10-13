@@ -31,41 +31,34 @@ public class Main {
 				case "C": //CREATE - C
 					session.beginTransaction();
 					Scanner c = new Scanner(System.in); 
-					
-					Pessoa p1 = new Pessoa();
-					
+										
 					System.out.print("\nNome: ");
 					String nome = c.nextLine();
-					p1.setNome(nome);
 
 					System.out.print("CPF: ");
 					String cpf = c.nextLine();
-					p1.setCpf(cpf);
 
 					System.out.print("Data de Nascimento: ");
 					String dataNasci = c.nextLine();
-					p1.setDataNascimento(dataNasci);
 
 					System.out.print("Contato: ");
 					String contato = c.nextLine();
-					p1.setContato(contato);
 
-					session.save(p1);
+					
+					session.save( new Pessoa(nome, cpf, dataNasci, contato));
 					session.flush();
-
-					// session.save( new Pessoa(nome, cpf, dataNasci, contato));
 					session.getTransaction().commit();
 					break;
 	
 				case "R": //READ - R
 					System.out.println("\n--- SELECT ---");
 					session.beginTransaction();
-					session.flush();
-
+					
 					List result = session.createQuery( "from Pessoa" ).list();
 					for ( Pessoa pessoa : (List<Pessoa>) result ) {
 						System.out.println( pessoa.getId() + " - " + pessoa.getNome() + " - " + pessoa.getCpf() + " - " + pessoa.getDataNascimento() + " - " + pessoa.getContato());
 					}
+					session.flush();
 					session.getTransaction().commit();	
 
 					break;
@@ -88,12 +81,10 @@ public class Main {
 					query = session.createQuery( "DELETE FROM Pessoa p WHERE p.cpf = :cpf" );
 					query.setParameter("cpf","09829992809");
 					query.executeUpdate();
+					session.flush();
 					session.getTransaction().commit();
 					break;
 	
-				// case "0":
-				// 	//System.exit(0);
-				// 	break;
 				default:
 					break;
 			}
