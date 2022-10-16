@@ -27,7 +27,7 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Annotated entity classes -->
-        <mapping class="org.example.Pessoa"/>
+        <mapping class="org.classes.Pessoa"/>
 
     </session-factory>
 </hibernate-configuration>
