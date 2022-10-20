@@ -1,8 +1,11 @@
-package org.classes;
-
+package org.modelos;
 
 import java.io.IOException;
 
+import org.auxiliares.dao.AlunoDAO;
+import org.auxiliares.dao.ResponsavelDAO;
+import org.auxiliares.inputs.Aluno_in;
+import org.auxiliares.inputs.Responsavel_in;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -26,28 +29,52 @@ public class Main {
 			Scanner k = new Scanner(System.in); 
 			System.out.print("Escolha uma das opções do nosso menu: ");
 			key = k.nextLine().toUpperCase();
-			Pessoa pessoa = new Pessoa();
 			
 			switch (key) {
 				
 				case "C": //CREATE - C
-					pessoa.createPessoa(pessoa, session);
+					menuCreate();
+					System.out.print("Escolha uma das opções do nosso menu: ");
+					key = k.nextLine().toUpperCase();
+
+					switch (key) {
+						case "A":
+						Aluno_in Object = new Aluno_in();
+						Scanner r = new Scanner(System.in)
+						Long id = r.nextLong();
+						Responsavel resp_Aluno = session.find(Responsavel.class, id);
+
+						AlunoDAO DAO = new AlunoDAO(resp_Aluno, Object.createAluno(), session);
+						DAO.create();
+							break;
+						case "R":
+							Responsavel_in Object = new Responsavel_in();
+							ResponsavelDAO DAO = new ResponsavelDAO(Object.createResponsavel(), session);
+							DAO.create();
+							break;
+						case "P":
+							//
+							break;
+					
+						default:
+							break;
+					}
 					break;
 	
 				case "R": //READ - R
-					pessoa.selectPessoa(session);
+					// pessoa.selectPessoa(session);
 					break;
 	
 				case "U": //UPDATE - U
-					pessoa.updatePessoa(session);
+					// pessoa.updatePessoa(session);
 					break;
 	
 				case "D": //DELETE - D
-					pessoa.deletePessoa(session);
+					// pessoa.deletePessoa(session);
 					break;
 
 				case "F": //FIND - F
-					pessoa.findPessoa(session);
+					// pessoa.findPessoa(session);
 					break;
 	
 				default:
@@ -93,6 +120,10 @@ public class Main {
 	public static void menu(){
 		System.out.println("\n--- Cia do Saber Reforço Escolar ---");
 		System.out.println("\sC - reate\n R - ead\n U - pdate\n D - elete\n F - ind");
+	}
+	public static void menuCreate(){
+		System.out.println("\n--- Cia do Saber Reforço Escolar ---");
+		System.out.println("\sA - luno\n R - esponsavel\n P - rofessora");
 	}
 
 	public static void limpaConsole() throws InterruptedException, IOException{
